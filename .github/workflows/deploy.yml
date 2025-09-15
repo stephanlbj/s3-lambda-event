@@ -37,7 +37,7 @@ jobs:
 
       - name: Prepare Lambda payload
         run: |
-          echo '{"source":"github-actions","status":"deploy-finished"}' > payload.json
+          printf '{"source":"github-actions","status":"deploy-finished"}' > payload.json
 
       - name: Invoke Lambda after deploy
         run: |
