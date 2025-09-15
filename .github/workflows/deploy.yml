@@ -35,12 +35,16 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           SOURCE_DIR: out
 
+      - name: Prepare Lambda payload
+        run: |
+          echo '{"source":"github-actions","status":"deploy-finished"}' > payload.json
+
       - name: Invoke Lambda after deploy
         run: |
           aws lambda invoke \
             --function-name ${{ secrets.AWS_LAMBDA_FUNCTION }} \
             --region ${{ secrets.AWS_REGION }} \
-            --payload '{"source":"github-actions","status":"deploy-finished"}' \
+            --payload file://payload.json \
             response.json
 
       - name: Show Lambda response
